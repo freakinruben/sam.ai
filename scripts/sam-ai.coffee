@@ -9,6 +9,7 @@
 #   These are from the scripting documentation: https://github.com/github/hubot/blob/master/docs/scripting.md
 Url = require "url"
 Redis = require "redis"
+_ = require "underscore"
 
 module.exports = (robot) ->
 
@@ -37,6 +38,29 @@ module.exports = (robot) ->
 
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
-    client.sadd("tokens", token);
+    client.sadd('tokens', token);
 
     res.send JSON.parse '{ "msg" : "Successfully registered ' + token + '" }'
+
+  robot.respond /hook me up/i, (msg) ->
+    currentTime = new Date().getTime()
+    client.hset('queue', msg.message.user.id, currentTime, (err, res) ->
+      makeMatch msg
+    )
+    msg.reply "thank you, we're going to hook you up for a video chat, please standby..."
+
+  makeMatch = (msg) ->
+    client.hgetall('queue', (err, obj) ->
+      queueSize = _.size obj
+
+      if queueSize >= 2
+        userID = msg.message.user.id
+        userIDs = _.keys(obj)
+        if _.contains(userIDs, userID)
+          otherUserID = _.chain(userIDs)
+            .filter((id) -> return (id != userID))
+            .sample(1)
+            .value()
+          msg.reply "hooking you up with #{otherUserID}"
+
+    )
