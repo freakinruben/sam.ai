@@ -9,12 +9,12 @@
   </head>
   <body>
     
-    <header class="">
+  <div id="chats">
       <div id="logo">
-        <span>sambot.io</span>
+        sambot
       </div>
-    </header>
-    <section class="fullscreen homescreen row">
+
+    
       <!-- chat is where the chatting animation will take place.
       1. Hi, i'm Sam.
       2. 
@@ -24,60 +24,82 @@
       .current for current item
       .hide for future items
       data-timer to set the duration for the next item (optional?) -->
-      <ul class="chat">
-        <li class="chat-item sambot faded" data-timer="1200">Hi, I'm Sam</li>
-        <li class="chat-item sambot current" data-timer="1200"></li>
-        <li class="chat-item sambot hide" data-timer="1200"></li>
-        <li class="chat-item sambot hide" data-timer="1200">
-          <button class="button">go meet amazing people</button>
-        </li>
-      </ul>
-    </section>
+        <!--<section id="slide-0" class="slide active">
+          <h2>Hi, I'm Sam...</h2>
+        </section>
+        <section id="slide-1" class="slide active">
+          <h2>I help you connect to 324 other startup founders. Anywhere, anytime.</h2>
+        </section>
+        <section id="slide-2" class="slide active">
+          <h2>I’ll arrange you a one-on-one video chat with another founder whenever you want so you can expand your network meaningfully and share knowledge effectively.</h2>
+          <button class="button-white">go meet other amazing people</button>
+        </section>-->
+        <section id="slide-3" class="slide active">
+          <h2>What's your primary Slack group?</h2>
+          <div class="slackgroup-input">
+            <form action="#" method="post" id="slack-group-check" name="slack-group-check" class="validate" target="_blank" novalidate>
+                <div class="field-group">
+                    <input type="text" value="" name="COMPANY" class="" placeholder="e.g. grible.slack.com" id="mce-COMPANY" placeholder="Company">
+                </div>
+                <div id="responses" class="clear">
+                    <div class="response" id="error-response" style="display:none"></div>
+                    <div class="response" id="success-response" style="display:none"></div>
+                </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;"><input type="text" name="b_10c4c48aacb1e2ecab52c00c2_e32cadbd44" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button hide"></div>
+                <a href="#" class="button-white submit-btn">next</a>
+            </form>     
+          </div>     
+        </section>
+  </div>
     
-    <section class="fullscreen signup row">
-<!--        q = question
-            a = awnser -->
+    <!--<section class="fullscreen signup row">
+       q = question
+            a = awnser 
       <form action="" method="">
-        <ul class="chat">
-          <li id="q1" class="chat-item sambot current">
+        <div class="chat">
+          <div id="q1" class="chat-item sambot current">
             <span class="q"></span>
             <input class="a" type="text" placeholder="lorem" />
             
             <button class="button hide next">next</button>
-          </li>
-          <li id="q2" class="chat-item sambot question hide">
+          </div>
+          <div id="q2" class="chat-item sambot question hide">
             <span class="q"></span>
             <input class="a" type="text" placeholder="lorem" />
             
             <button class="button next">next</button>
-          </li>
-          <li id="q3" class="chat-item sambot question hide">
+          </div>
+          <div id="q3" class="chat-item sambot question hide">
             <span class="q"></span>
             <input class="a" type="text" placeholder="lorem" />
             
             <button class="button next">next</button>
-          </li>
-          <li id="q4" class="chat-item sambot question hide">
+          </div>
+          <div id="q4" class="chat-item sambot question hide">
             <span class="q"></span>
             <input class="a" type="text" placeholder="lorem" />
             
             <button class="button" type="submit">here we go!</button>
-          </li>
-        </ul>
+          </div>
+        </div>
         <div class="no-sambot hide">
           <span>lorem ipsum</span>
         </div>
       </form>
-    </section>
+    </section> -->
     
     <footer class="footer">
-      <div class="logo-slack">
-        lorem ipsum dolor sit amet
+      <div class="wrap">
+        <div class="logo-slack">
+          You need Slack for Sam to work.
+        </div>
+        <div class="scroll"></div>
+        <div class="credits">
+          Get to know my parents, the ones that made me.
+        </div>
       </div>
-      <div class="credits">
-        lorem ipsum dolor sit
-        <a href="#">amet</a>
-      </div>
+
     </footer>
     
     <script src="bower_components/jquery/dist/jquery.min.js"></script>

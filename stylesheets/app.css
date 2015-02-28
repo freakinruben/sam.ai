@@ -9157,15 +9157,282 @@ th.hide-for-touch {
     display: table-cell !important;
   }
 }
-/* line 8, ../scss/app.scss */
+/* line 9, ../scss/app.scss */
 body {
+  font-family: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 15, ../scss/app.scss */
+h2 {
+  color: #fff;
+  font-size: 28px;
+  line-height: 42px;
+}
+
+/* line 21, ../scss/app.scss */
+h3 {
+  color: #fff;
+  font-size: 18px;
+  line-height: 42px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* line 29, ../scss/app.scss */
+.hide {
+  display: none;
+}
+
+/* line 31, ../scss/app.scss */
+.button-white {
+  border-style: solid;
+  border-width: 0;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: normal;
+  line-height: normal;
+  margin: 0 0 1.25rem;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 0;
+  display: inline-block;
+  padding-top: 1rem;
+  padding-right: 2rem;
+  padding-bottom: 1.0625rem;
+  padding-left: 2rem;
+  font-size: 1rem;
+  background-color: white;
+  border-color: #cccccc;
+  color: #333333;
+  border-radius: 3px;
+  display: block;
+  margin: 28px auto;
+}
+/* line 162, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
+.button-white:hover, .button-white:focus {
+  background-color: #cccccc;
+}
+/* line 168, ../bower_components/foundation/scss/foundation/components/_buttons.scss */
+.button-white:hover, .button-white:focus {
+  color: #333333;
+}
+
+/* line 39, ../scss/app.scss */
+#logo {
+  width: 100px;
+  font-weight: 600;
+  margin: 0px 30px;
+  text-align: left;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url("../images/logo.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 35px 35px 35px 50px;
+  z-index: 100;
+}
+
+/* line 56, ../scss/app.scss */
+#chats {
+  height: 100%;
+}
+
+/* line 60, ../scss/app.scss */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 100%;
+  background: pink;
+  overflow: hidden;
+  transition: height 0.9s ease-in-out;
+}
+
+/* line 74, ../scss/app.scss */
+.slide:nth-child(1) {
+  z-index: 10;
+  background: white;
+}
+
+/* line 75, ../scss/app.scss */
+.slide:nth-child(2) {
+  z-index: 9;
+  background: #bcdfe6;
+}
+
+/* line 76, ../scss/app.scss */
+.slide:nth-child(3) {
+  z-index: 8;
+  background: #5eb0c1;
+}
+
+/* line 77, ../scss/app.scss */
+.slide:nth-child(4) {
+  z-index: 7;
+  background: red;
+}
+
+/* line 79, ../scss/app.scss */
+.active.slide {
+  height: 100%;
+}
+
+/* line 83, ../scss/app.scss */
+#slide-0 {
   background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #DE6262), color-stop(1, #FFB88C));
   background-image: -o-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
   background-image: -moz-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
   background-image: -webkit-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
   background-image: -ms-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
   background-image: linear-gradient(to right bottom, #DE6262 0%, #FFB88C 100%);
+}
+/* line 91, ../scss/app.scss */
+#slide-0 h2 {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 24%;
+}
+
+/* line 100, ../scss/app.scss */
+#slide-1 {
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #1D976C), color-stop(1, #93F9B9));
+  background-image: -o-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+  background-image: -moz-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+  background-image: -webkit-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+  background-image: -ms-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+  background-image: linear-gradient(to right bottom, #1D976C 0%, #93F9B9 100%);
+}
+/* line 108, ../scss/app.scss */
+#slide-1 h2 {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 23%;
+}
+
+/* line 117, ../scss/app.scss */
+#slide-2 {
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #7474BF), color-stop(1, #348AC7));
+  background-image: -o-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+  background-image: -moz-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+  background-image: -webkit-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+  background-image: -ms-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+  background-image: linear-gradient(to right bottom, #7474BF 0%, #348AC7 100%);
+}
+/* line 125, ../scss/app.scss */
+#slide-2 h2 {
+  margin: 0 auto;
+  width: 60%;
+  text-align: center;
+  margin-top: 19%;
+}
+
+/* line 134, ../scss/app.scss */
+#slide-3 {
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #485563), color-stop(1, #29323c));
+  background-image: -o-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+  background-image: -moz-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+  background-image: -webkit-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+  background-image: -ms-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+  background-image: linear-gradient(to right bottom, #485563 0%, #29323c 100%);
+}
+/* line 142, ../scss/app.scss */
+#slide-3 h2 {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  margin-top: 18%;
+}
+/* line 149, ../scss/app.scss */
+#slide-3 .slackgroup-input {
+  width: 300px;
+  margin: 10px auto;
+}
+/* line 153, ../scss/app.scss */
+#slide-3 .slackgroup-input .button-white {
+  max-width: 150px;
+}
+/* line 156, ../scss/app.scss */
+#slide-3 input {
   color: #fff;
-  font-family: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-size: 18px;
+  line-height: 42px;
+  text-align: left;
+  opacity: 0.7;
+  border: 0;
+  background-color: transparent;
+  height: 50px;
+  border-bottom: 1px solid #757575;
+  margin-bottom: 15px;
+}
+/* line 169, ../scss/app.scss */
+#slide-3 input:focus {
+  border: 0;
+  background-color: transparent;
+  border-bottom: 1px solid #FFF;
+  box-shadow: none;
+}
+/* line 176, ../scss/app.scss */
+#slide-3 .sign-up {
+  margin-top: 65px;
+}
+
+/* line 185, ../scss/app.scss */
+footer {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  font-size: 12px;
+  line-height: 18px;
+  float: left;
+  position: fixed;
+  bottom: 0;
+  z-index: 999999;
+}
+/* line 195, ../scss/app.scss */
+footer .wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 90%;
+  min-height: 75px;
+  color: #E5CDCB;
+}
+/* line 202, ../scss/app.scss */
+footer .wrap .logo-slack {
+  background-image: url("../images/slack-logo.png");
+  background-position: left center;
+  background-repeat: no-repeat;
+  float: left;
+  padding-left: 80px;
+  margin-top: 29px;
+}
+/* line 211, ../scss/app.scss */
+footer .wrap .scroll {
+  background-image: url("../images/arrow-down.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 30px;
+  position: relative;
+  margin-top: 23px;
+  width: 40px;
+  float: left;
+  left: 25%;
+}
+/* line 223, ../scss/app.scss */
+footer .wrap .credits {
+  float: right;
+  margin-top: 29px;
+}
+
+/* line 228, ../scss/app.scss */
+.signup {
+  display: none;
 }

@@ -5,15 +5,228 @@ $smooth-red: #DE6262;
 $smooth-orange: #FFB88C;
 
 
+
 body{
-	 background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, $smooth-red), color-stop(1, $smooth-orange));
-  	background-image: -o-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
-  	background-image: -moz-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
-  	background-image: -webkit-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
-  	background-image: -ms-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
-  	background-image: linear-gradient(to right bottom, $smooth-red 0%, $smooth-orange 100%);
-	color: #fff; font-family: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+	font-family: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+	color: #fff;
 	-webkit-font-smoothing: antialiased;
+}
+
+h2 {
+	color: #fff;
+	font-size: 28px; 
+	line-height: 42px;
+}
+
+h3 {
+	color: #fff;
+	font-size: 18px; 
+	line-height: 42px;
+	text-align: center;
+	opacity: 0.7;
+}
+
+.hide { display: none;}
+
+.button-white{
+  	@include button-base;
+  	@include button-size;
+  	@include button-style(white, true);
+  	display: block;
+	margin: 28px auto;
+}
+
+#logo {
+	width: 100px;
+	font-weight: 600;
+	margin: 0px 30px;
+	text-align: left;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: url('../images/logo.png');
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding: 35px 35px 35px 50px; 
+	z-index: 100;
+}
+
+
+#chats {
+	height:100%;
+}
+ 
+.slide {
+	position: absolute;
+	top:0;
+	left:0;
+	height: 0;							
+	width: 100%;
+ 
+  background: pink;
+  overflow: hidden;
+	// this would be vendor prefixed:
+	transition: height 0.9s ease-in-out;
+}
+ 
+// so that slides can transition from bottom-up
+.slide:nth-child(1) { z-index:10; background: white; }
+.slide:nth-child(2) { z-index:9; background: #bcdfe6; }
+.slide:nth-child(3) { z-index:8; background: #5eb0c1; }
+.slide:nth-child(4) { z-index:7; background: red; }
+ 
+.active.slide {
+	height: 100%;
+}
+
+#slide-0 {
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #DE6262), color-stop(1, #FFB88C));
+	background-image: -o-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
+	background-image: -moz-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
+	background-image: -webkit-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
+	background-image: -ms-linear-gradient(right bottom, #DE6262 0%, #FFB88C 100%);
+	background-image: linear-gradient(to right bottom, #DE6262 0%, #FFB88C 100%);
+
+	h2 {
+		margin: 0 auto; 
+		width: 50%; 
+		text-align: center; 
+		margin-top: 24%;
+	}
+
+}
+
+#slide-1 {
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #1D976C), color-stop(1, #93F9B9));
+	background-image: -o-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+	background-image: -moz-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+	background-image: -webkit-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+	background-image: -ms-linear-gradient(right bottom, #1D976C 0%, #93F9B9 100%);
+	background-image: linear-gradient(to right bottom, #1D976C 0%, #93F9B9 100%);
+
+	h2 {
+		margin: 0 auto; 
+		width: 50%; 
+		text-align: center; 
+		margin-top: 23%;
+	}
+
+}
+
+#slide-2 {
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #7474BF), color-stop(1, #348AC7));
+	background-image: -o-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+	background-image: -moz-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+	background-image: -webkit-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+	background-image: -ms-linear-gradient(right bottom, #7474BF 0%, #348AC7 100%);
+	background-image: linear-gradient(to right bottom, #7474BF 0%, #348AC7 100%);
+
+	h2 {
+		margin: 0 auto; 
+		width: 60%; 
+		text-align: center; 
+		margin-top: 19%;
+	}
+
+}
+
+#slide-3 {
+	background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #485563), color-stop(1, #29323c));
+	background-image: -o-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+	background-image: -moz-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+	background-image: -webkit-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+	background-image: -ms-linear-gradient(right bottom, #485563 0%, #29323c 100%);
+	background-image: linear-gradient(to right bottom, #485563 0%, #29323c 100%);
+
+	h2 {
+		margin: 0 auto; 
+		width: 50%; 
+		text-align: center; 
+		margin-top: 18%;
+	}
+
+	.slackgroup-input {
+		width:300px;
+		margin: 10px auto;
+
+		.button-white{ max-width: 150px;}
+	}
+
+	input {
+		color: #fff;
+		font-size: 18px; 
+		line-height: 42px;
+		text-align: left;
+		opacity: 0.7;
+		border: 0;
+		background-color: transparent;
+		height: 50px;
+		border-bottom: 1px solid #757575;
+		margin-bottom: 15px;
+	}
+
+	input:focus {
+		border: 0;
+		background-color: transparent;
+		border-bottom: 1px solid #FFF;
+		box-shadow: none;
+	}
+
+	.sign-up { margin-top: 65px; }
+
+}
+
+
+
+
+
+
+footer {
+	background-color: rgba(0,0,0,0.3); 
+	width:100%; 
+	font-size: 12px;
+	line-height: 18px;
+	float:left;
+	position:fixed;
+	bottom:0;
+	z-index:999999;
+
+	.wrap {
+		position: relative;
+		margin: 0 auto;
+		width: 90%;
+		min-height: 75px;
+		color: #E5CDCB;
+
+		.logo-slack{
+			background-image: url('../images/slack-logo.png');
+			background-position: left center;
+			background-repeat: no-repeat;
+			float: left; 
+			padding-left: 80px;
+			margin-top:29px; 
+		}
+
+		.scroll { 
+			background-image: url('../images/arrow-down.png');
+			background-position: center;
+			background-repeat: no-repeat;
+			height: 30px;
+			position: relative;
+			margin-top: 23px;
+			width: 40px;
+			float: left;
+			left: 25%;
+		}
+
+		.credits { float: right; margin-top:29px; }
+	}
+
+}
+
+.signup {
+	display:none;
 }
 
 // Or selectively include components
