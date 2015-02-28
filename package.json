@@ -18,7 +18,8 @@
     "hubot-shipit": "~0.1.2",
     "hubot-slack-sam-ai": "file:../hubot-slack-sam-ai",
     "hubot-youtube": "~0.1.2",
-    "redis": "0.8.4"
+    "redis": "0.8.4",
+    "underscore": "^1.8.2"
   },
   "engines": {
     "node": "0.10.x"
