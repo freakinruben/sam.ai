@@ -5,4 +5,8 @@ bin
 *.sublime-*
 Thumbs.db
 dump.rdb
-
+Gemfile.lock
+bower_components
+.sass-cache/
+dump.rdb
+stylesheets/
