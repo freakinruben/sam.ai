@@ -91,7 +91,11 @@ module.exports = (robot) ->
           if otherUserID?
             setChatHistory(userID, otherUserID)
             otherUser = robot.brain.userForId(otherUserID)
-            otherUserName = otherUser.real_name
+            otherUserName = otherUser.name
+
+            if otherUser.real_name.length > 0
+              otherUserName = otherUser.real_name
+
             videoURL = 'https://room.co/#/sambot-' + userID + '-' + otherUserID
             msg.reply "hooking you up with #{otherUserName} at #{videoURL}"
             robot.messageRoom otherUser.room, "incoming video chat from #{userName} at #{videoURL}"
