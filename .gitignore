@@ -4,4 +4,3 @@ node_modules
 Gemfile.lock
 .sass-cache
 dump.rdb
-stylesheets/
