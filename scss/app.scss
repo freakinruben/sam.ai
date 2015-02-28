@@ -1,6 +1,21 @@
 @import "settings";
 @import "foundation";
 
+$smooth-red: #DE6262;
+$smooth-orange: #FFB88C;
+
+
+body{
+	 background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, $smooth-red), color-stop(1, $smooth-orange));
+  	background-image: -o-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
+  	background-image: -moz-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
+  	background-image: -webkit-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
+  	background-image: -ms-linear-gradient(right bottom, $smooth-red 0%, $smooth-orange 100%);
+  	background-image: linear-gradient(to right bottom, $smooth-red 0%, $smooth-orange 100%);
+	color: #fff; font-family: "Open Sans", "Helvetica", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
 // Or selectively include components
 // @import
 //   "foundation/components/accordion",
