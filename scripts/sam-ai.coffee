@@ -44,7 +44,6 @@ module.exports = (robot) ->
         robot.logger.error "Sam.ai failed to authenticate to Redis"
       else
         robot.logger.info "Sam.ai successfully authenticated to Redis"
-        getData()
 
   client.on "error", (err) ->
     if /ECONNREFUSED/.test err.message
