@@ -36,6 +36,24 @@ module.exports = (robot) ->
 
   info   = Url.parse  redisUrl, true
   client = Redis.createClient(info.port, info.hostname)
+  prefix = info.path?.replace('/', '') or 'hubot'
+
+  if info.auth
+    client.auth info.auth.split(":")[1], (err) ->
+      if err
+        robot.logger.error "Sam.ai failed to authenticate to Redis"
+      else
+        robot.logger.info "Sam.ai successfully authenticated to Redis"
+
+  client.on "error", (err) ->
+    if /ECONNREFUSED/.test err.message
+
+    else
+      robot.logger.error err.stack
+
+  client.on "connect", ->
+    robot.logger.debug "Sam.ai successfully connected to Redis"
+    getData() if not info.auth
 
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
@@ -64,9 +82,6 @@ module.exports = (robot) ->
           if user.real_name.length > 0
             userName = user.real_name
 
-          # userName = user.real_name if user.real_name.length > 0 else user.name
-          # console.log("incoming video chat from _#{userName}_")
-
           otherUserID = _.chain(userIDs)
             .filter((id) -> return (id != userID))
             # .reject((id) -> return havePreviouslyChatted(userID, id))
@@ -77,9 +92,9 @@ module.exports = (robot) ->
             setChatHistory(userID, otherUserID)
             otherUser = robot.brain.userForId(otherUserID)
             otherUserName = otherUser.real_name
-            msg.reply "hooking you up with #{otherUserName}"
-            robot.messageRoom otherUser.room, "incoming video chat from #{userName}"
-            # console.log(robot.brain.userForId(otherUserID))
+            videoURL = 'https://room.co/#/sambot-' + userID + '-' + otherUserID
+            msg.reply "hooking you up with #{otherUserName} at #{videoURL}"
+            robot.messageRoom otherUser.room, "incoming video chat from #{userName} at #{videoURL}"
           else
             msg.reply "no other users found"
     )
