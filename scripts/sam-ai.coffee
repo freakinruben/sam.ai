@@ -38,6 +38,24 @@ module.exports = (robot) ->
   client = Redis.createClient(info.port, info.hostname)
   prefix = info.path?.replace('/', '') or 'hubot'
 
+  if info.auth
+    client.auth info.auth.split(":")[1], (err) ->
+      if err
+        robot.logger.error "Sam.ai failed to authenticate to Redis"
+      else
+        robot.logger.info "Sam.ai successfully authenticated to Redis"
+        getData()
+
+  client.on "error", (err) ->
+    if /ECONNREFUSED/.test err.message
+
+    else
+      robot.logger.error err.stack
+
+  client.on "connect", ->
+    robot.logger.debug "Sam.ai successfully connected to Redis"
+    getData() if not info.auth
+
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
     client.sadd('tokens', token);
