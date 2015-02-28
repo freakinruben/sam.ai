@@ -36,6 +36,7 @@ module.exports = (robot) ->
 
   info   = Url.parse  redisUrl, true
   client = Redis.createClient(info.port, info.hostname)
+  prefix = info.path?.replace('/', '') or 'hubot'
 
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
