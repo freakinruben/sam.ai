@@ -6,3 +6,6 @@ bin
 Thumbs.db
 Gemfile.lock
 bower_components
+.sass-cache/
+dump.rdb
+stylesheets/
