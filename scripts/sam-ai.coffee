@@ -37,6 +37,7 @@ module.exports = (robot) ->
   info   = Url.parse  redisUrl, true
   redis  = Redis.createClient(info.port, info.hostname)
   prefix = info.path?.replace('/', '') or 'hubot'
+  lastQueueSize = 0
 
   if info.auth
     redis.auth info.auth.split(":")[1], (err) ->
@@ -75,9 +76,9 @@ module.exports = (robot) ->
   makeMatch = (msg) ->
     # read queue hash
     redis.hgetall('queue', (err, obj) ->
-      queueSize = _.size obj
+      lastQueueSize = _.size obj
 
-      if queueSize >= 2
+      if lastQueueSize >= 2
         userIDs = _.keys(obj)
         userID1 = msg.message.user.id
         getChatHistory(userID1, (user1History) ->
