@@ -115,26 +115,26 @@ module.exports = (robot) ->
     return if user.real_name.length > 0 then user.real_name else user.name
 
 
-  havePreviouslyChatted = (firstUserID, secondUserID) ->
-    console.log(getChatHistory(firstUserID))
+  havePreviouslyChatted = (userID1, userID2) ->
+    console.log(getChatHistory(userID1))
     # previouslyChatted = redis.sismember('a', 'b')
     # console.log(util.inspect(redis.sismember))
     # console.log(typeof previouslyChatted + ": #{previouslyChatted}")
 
-    if redis.sismember(firstUserID, secondUserID) is 1
+    if redis.sismember(userID1, userID2) is 1
       return true
     else
       return false
-    # console.log(redis.sismember(firstUserID, secondUserID))
-    # console.log("have #{firstUserID} and #{secondUserID} chatted before? : #{redis.sismember(firstUserID, secondUserID)}")
-    # return redis.sismember(firstUserID, secondUserID)
+    # console.log(redis.sismember(userID1, userID2))
+    # console.log("have #{userID1} and #{userID2} chatted before? : #{redis.sismember(userID1, userID2)}")
+    # return redis.sismember(userID1, userID2)
 
 
   getChatHistory = (userID) ->
     return redis.smembers(userID);
 
 
-  setChatHistory = (firstUserID, secondUserID) ->
-    redis.sadd(firstUserID, secondUserID)
-    redis.sadd(secondUserID, firstUserID)
+  setChatHistory = (userID1, userID2) ->
+    redis.sadd(userID1, userID2)
+    redis.sadd(userID2, userID1)
 
