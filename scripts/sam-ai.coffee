@@ -53,7 +53,7 @@ module.exports = (robot) ->
 
   redis.on "connect", ->
     robot.logger.debug "Sam.ai successfully connected to Redis"
-    getData() if not info.auth
+    #getData() if not info.auth
 
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
