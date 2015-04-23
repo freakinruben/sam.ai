@@ -12,6 +12,8 @@ This README is intended to help get you started. Definitely update and improve t
 
 You can test your hubot by running the following.
 
+HUBOT_SLACK_TOKEN={SLACK_API_TOKEN} HUBOT_LOG_LEVEL=DEBUG ./bin/hubot --adapter slack
+
 You can start hubot locally by running:
 
     % bin/hubot
