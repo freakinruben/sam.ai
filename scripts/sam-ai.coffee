@@ -100,14 +100,14 @@ module.exports = (robot) ->
 
       setChatHistory(userID1, userID2)
       sendMsg(userID1, "hooking you up with #{userName2} at #{videoURL}")
-      sendMsg(userID1, "We've matched you with #{userName1} for a videochat. Begin directly at #{videoURL}")
+      sendMsg(userID2, "We've matched you with #{userName1} for a videochat. Begin directly at #{videoURL}")
     else
       robot.logger.debug "empty id #{userID1}; #{userID2}"
 
 
   sendMsg = (userID, msg) ->
     user = robot.brain.userForId(userID)
-    robot.messageRoom user.room msg
+    robot.messageRoom(user.room, msg)
 
 
   getUserName = (userID) ->
@@ -135,6 +135,7 @@ module.exports = (robot) ->
 
 
   setChatHistory = (userID1, userID2) ->
+    robot.logger.debug "set chathistory between #{userID1} and #{userID2}"
     redis.sadd(userID1, userID2)
     redis.sadd(userID2, userID1)
 
