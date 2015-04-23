@@ -69,7 +69,7 @@ module.exports = (robot) ->
     redis.hset('queue', msg.message.user.id, currentTime, (err, res) ->
       makeMatch msg
     )
-    msg.reply "thank you, we're going to hook you up for a video chat, please standby..."
+    msg.reply "Hey #{getUserName(msg.message.user)}, it's nice to hear from you. I'm gonna look for a candidate for you."
 
 
   makeMatch = (msg) ->
@@ -102,10 +102,13 @@ module.exports = (robot) ->
       robot.logger.debug "matching #{userName1}; #{userName2}"
 
       setChatHistory(userID1, userID2)
-      sendMsg(userID1, "hooking you up with #{userName2} at #{videoURL}")
-      sendMsg(userID2, "We've matched you with #{userName1} for a videochat. Begin directly at #{videoURL}")
+      sendMsg(userID1, "So I took a quick look, I think you and #{userName2} should chat. I've set up a video-room for you at #{videoURL}.")
+      sendMsg(userID2, "Hey, it's Sam.ai, I think you and #{userName} should chat. I've set up a video-room for you at #{videoURL}.")
+
     else
-      robot.logger.debug "empty id #{userID1}/#{userID2}"
+      #robot.logger.debug "empty id #{userID1}/#{userID2}"
+      sendMsg(userID1, "I took a quick look and couldn't find anyone that's available for a chat right now. I will let you know if I find someone in the coming half hour.")
+      sendMsg(userID1, "If you don't want to wait and try another time, let me know by saying 'cancel'.")
 
 
   sendMsg = (userID, msg) ->
