@@ -16,9 +16,9 @@
     "hubot-rules": "~0.1.0",
     "hubot-scripts": "~2.5.16",
     "hubot-shipit": "~0.1.2",
-    "hubot-slack-sam-ai": "file:../hubot-slack-sam-ai",
+    "hubot-slack": "~3.3.0",
     "hubot-youtube": "~0.1.2",
-    "redis": "0.8.4",
+    "redis": "0.12.1",
     "underscore": "^1.8.2"
   },
   "engines": {
