@@ -116,8 +116,14 @@ module.exports = (robot) ->
     robot.messageRoom(user.room, msg)
 
 
-  getUserName = (userID) ->
-    user = robot.brain.userForId(userID)
+  getUserName = (user) ->
+    # user can be string, we then fetch the user from the brain, otherwise we asume `user` is the user-object
+    user = if typeof user is "string" then robot.brain.userForId(user) else user
+
+      user = userID
+    else
+      user =
+
     return if user.real_name.length > 0 then user.real_name else user.name
 
 
