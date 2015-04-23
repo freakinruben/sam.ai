@@ -62,7 +62,7 @@ module.exports = (robot) ->
     res.send JSON.parse '{ "msg" : "Successfully registered ' + token + '" }'
 
 
-  robot.respond /hook me up/i, (msg) ->
+  robot.respond /hook\s*me\s*up/i, (msg) ->
     currentTime = new Date().getTime()
     robot.logger.debug "add to queue: #{msg.message.user.id}"
     # store user-id in queue with timestamp
