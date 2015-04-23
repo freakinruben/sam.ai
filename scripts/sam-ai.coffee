@@ -35,41 +35,41 @@ module.exports = (robot) ->
     robot.logger.info "Using default redis on localhost:6379"
 
   info   = Url.parse  redisUrl, true
-  client = Redis.createClient(info.port, info.hostname)
+  redis  = Redis.createClient(info.port, info.hostname)
   prefix = info.path?.replace('/', '') or 'hubot'
 
   if info.auth
-    client.auth info.auth.split(":")[1], (err) ->
+    redis.auth info.auth.split(":")[1], (err) ->
       if err
         robot.logger.error "Sam.ai failed to authenticate to Redis"
       else
         robot.logger.info "Sam.ai successfully authenticated to Redis"
 
-  client.on "error", (err) ->
+  redis.on "error", (err) ->
     if /ECONNREFUSED/.test err.message
 
     else
       robot.logger.error err.stack
 
-  client.on "connect", ->
+  redis.on "connect", ->
     robot.logger.debug "Sam.ai successfully connected to Redis"
     getData() if not info.auth
 
   robot.router.post '/api/register', (req, res) ->
     token = req.body.token
-    client.sadd('tokens', token);
+    redis.sadd('tokens', token);
 
     res.send JSON.parse '{ "msg" : "Successfully registered ' + token + '" }'
 
   robot.respond /hook me up/i, (msg) ->
     currentTime = new Date().getTime()
-    client.hset('queue', msg.message.user.id, currentTime, (err, res) ->
+    redis.hset('queue', msg.message.user.id, currentTime, (err, res) ->
       makeMatch msg
     )
     msg.reply "thank you, we're going to hook you up for a video chat, please standby..."
 
   makeMatch = (msg) ->
-    client.hgetall('queue', (err, obj) ->
+    redis.hgetall('queue', (err, obj) ->
       queueSize = _.size obj
 
       if queueSize >= 2
@@ -105,22 +105,22 @@ module.exports = (robot) ->
 
   havePreviouslyChatted = (firstUserID, secondUserID) ->
     console.log(getChatHistory(firstUserID))
-    # previouslyChatted = client.sismember('a', 'b')
-    # console.log(util.inspect(client.sismember))
+    # previouslyChatted = redis.sismember('a', 'b')
+    # console.log(util.inspect(redis.sismember))
     # console.log(typeof previouslyChatted + ": #{previouslyChatted}")
 
-    if client.sismember(firstUserID, secondUserID) is 1
+    if redis.sismember(firstUserID, secondUserID) is 1
       return true
     else
       return false
-    # console.log(client.sismember(firstUserID, secondUserID))
-    # console.log("have #{firstUserID} and #{secondUserID} chatted before? : #{client.sismember(firstUserID, secondUserID)}")
-    # return client.sismember(firstUserID, secondUserID)
+    # console.log(redis.sismember(firstUserID, secondUserID))
+    # console.log("have #{firstUserID} and #{secondUserID} chatted before? : #{redis.sismember(firstUserID, secondUserID)}")
+    # return redis.sismember(firstUserID, secondUserID)
 
   getChatHistory = (userID) ->
-    return client.smembers(userID);
+    return redis.smembers(userID);
 
   setChatHistory = (firstUserID, secondUserID) ->
-    client.sadd(firstUserID, secondUserID)
-    client.sadd(secondUserID, firstUserID)
+    redis.sadd(firstUserID, secondUserID)
+    redis.sadd(secondUserID, firstUserID)
 
