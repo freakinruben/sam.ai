@@ -61,47 +61,59 @@ module.exports = (robot) ->
 
     res.send JSON.parse '{ "msg" : "Successfully registered ' + token + '" }'
 
+
   robot.respond /hook me up/i, (msg) ->
     currentTime = new Date().getTime()
+    robot.logger.debug "add to queue: #{msg.message.user.id}"
+    # store user-id in queue with timestamp
     redis.hset('queue', msg.message.user.id, currentTime, (err, res) ->
       makeMatch msg
     )
     msg.reply "thank you, we're going to hook you up for a video chat, please standby..."
 
+
   makeMatch = (msg) ->
+    # read queue hash
     redis.hgetall('queue', (err, obj) ->
       queueSize = _.size obj
 
       if queueSize >= 2
-        userID = msg.message.user.id
         userIDs = _.keys(obj)
-        if _.contains(userIDs, userID)
-          user = msg.message.user
-          userName = user.name
-
-          if user.real_name.length > 0
-            userName = user.real_name
-
-          otherUserID = _.chain(userIDs)
-            .filter((id) -> return (id != userID))
-            # .reject((id) -> return havePreviouslyChatted(userID, id))
-            .sample(1)
+        userID1 = msg.message.user.id
+        if _.contains(userIDs, userID1) # check if user-id is in queue
+          userID2 = _.chain(userIDs)
+            .filter((id) -> return (id != userID1))
+            # .reject((id) -> return havePreviouslyChatted(userID1, id))
+            .sample(1) # random id
             .value()
 
-          if otherUserID?
-            setChatHistory(userID, otherUserID)
-            otherUser = robot.brain.userForId(otherUserID)
-            otherUserName = otherUser.name
-
-            if otherUser.real_name.length > 0
-              otherUserName = otherUser.real_name
-
-            videoURL = 'https://room.co/#/sambot-' + userID + '-' + otherUserID
-            msg.reply "hooking you up with #{otherUserName} at #{videoURL}"
-            robot.messageRoom otherUser.room, "incoming video chat from #{userName} at #{videoURL}"
-          else
-            msg.reply "no other users found"
+          connectUsers(userID1, userID2)
     )
+
+
+  connectUsers = (userID1, userID2) ->
+    if userID1? and userID2?
+      videoURL = 'https://room.co/#/sambot-' + userID1 + '-' + userID2
+      userName1 = getUserName(userID1)
+      userName2 = getUserName(userID2)
+      robot.logger.debug "matching #{userName1}; #{userName2}"
+
+      setChatHistory(userID1, userID2)
+      sendMsg(userID1, "hooking you up with #{userName2} at #{videoURL}")
+      sendMsg(userID1, "We've matched you with #{userName1} for a videochat. Begin directly at #{videoURL}")
+    else
+      robot.logger.debug "empty id #{userID1}; #{userID2}"
+
+
+  sendMsg = (userID, msg) ->
+    user = robot.brain.userForId(userID)
+    robot.messageRoom user.room msg
+
+
+  getUserName = (userID) ->
+    user = robot.brain.userForId(userID)
+    return if user.real_name.length > 0 then user.real_name else user.name
+
 
   havePreviouslyChatted = (firstUserID, secondUserID) ->
     console.log(getChatHistory(firstUserID))
@@ -117,8 +129,10 @@ module.exports = (robot) ->
     # console.log("have #{firstUserID} and #{secondUserID} chatted before? : #{redis.sismember(firstUserID, secondUserID)}")
     # return redis.sismember(firstUserID, secondUserID)
 
+
   getChatHistory = (userID) ->
     return redis.smembers(userID);
+
 
   setChatHistory = (firstUserID, secondUserID) ->
     redis.sadd(firstUserID, secondUserID)
