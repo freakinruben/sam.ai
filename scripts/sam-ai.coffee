@@ -81,19 +81,21 @@ module.exports = (robot) ->
         userIDs = _.keys(obj)
         userID1 = msg.message.user.id
         getChatHistory(userID1, (user1History) ->
-        if _.contains(userIDs, userID1) # check if user-id is in queue
-          userID2 = _.chain(userIDs)
-            .filter((id) -> return (id != userID1))
+          if _.contains(userIDs, userID1) # check if user-id is in queue
+            userID2 = _.chain(userIDs)
+              .filter((id) -> return (id != userID1))
               .reject((id) -> return havePreviouslyChatted(user1History, id))
-            .sample(1) # random id
-            .value()
+              .sample(1) # random id
+              .first()
+              .value()
 
-          connectUsers(userID1, userID2)
+            connectUsers(userID1, userID2)
+        )
     )
 
 
   connectUsers = (userID1, userID2) ->
-    if userID1? and userID2?
+    if userID1 and userID2
       videoURL = 'https://room.co/#/sambot-' + userID1 + '-' + userID2
       userName1 = getUserName(userID1)
       userName2 = getUserName(userID2)
@@ -103,7 +105,7 @@ module.exports = (robot) ->
       sendMsg(userID1, "hooking you up with #{userName2} at #{videoURL}")
       sendMsg(userID2, "We've matched you with #{userName1} for a videochat. Begin directly at #{videoURL}")
     else
-      robot.logger.debug "empty id #{userID1}; #{userID2}"
+      robot.logger.debug "empty id #{userID1}/#{userID2}"
 
 
   sendMsg = (userID, msg) ->
