@@ -80,10 +80,11 @@ module.exports = (robot) ->
       if queueSize >= 2
         userIDs = _.keys(obj)
         userID1 = msg.message.user.id
+        getChatHistory(userID1, (user1History) ->
         if _.contains(userIDs, userID1) # check if user-id is in queue
           userID2 = _.chain(userIDs)
             .filter((id) -> return (id != userID1))
-            # .reject((id) -> return havePreviouslyChatted(userID1, id))
+              .reject((id) -> return havePreviouslyChatted(user1History, id))
             .sample(1) # random id
             .value()
 
@@ -115,23 +116,20 @@ module.exports = (robot) ->
     return if user.real_name.length > 0 then user.real_name else user.name
 
 
-  havePreviouslyChatted = (userID1, userID2) ->
-    console.log(getChatHistory(userID1))
-    # previouslyChatted = redis.sismember('a', 'b')
-    # console.log(util.inspect(redis.sismember))
-    # console.log(typeof previouslyChatted + ": #{previouslyChatted}")
-
-    if redis.sismember(userID1, userID2) is 1
-      return true
-    else
-      return false
-    # console.log(redis.sismember(userID1, userID2))
-    # console.log("have #{userID1} and #{userID2} chatted before? : #{redis.sismember(userID1, userID2)}")
-    # return redis.sismember(userID1, userID2)
+  havePreviouslyChatted = (user1History, userID2) ->
+    #robot.logger.debug("chat history #{user1History} contains #{userID2}? #{_.contains(user1History, userID2)}")
+    #redis.sismember(userID1, userID2, (err, result) ->
+    return _.contains(user1History, userID2)
 
 
-  getChatHistory = (userID) ->
-    return redis.smembers(userID);
+  getChatHistory = (userID, callback) ->
+    history = null
+    redis.smembers  userID, (err, history) ->
+      robot.logger.debug("found history for #{userID} : #{history}")
+      callback(history)
+    #  return obj
+    #robot.logger.debug("returning history for #{userID}")
+    #return history
 
 
   setChatHistory = (userID1, userID2) ->
