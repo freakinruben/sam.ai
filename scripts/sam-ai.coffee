@@ -38,6 +38,7 @@ module.exports = (robot) ->
   redis  = Redis.createClient(info.port, info.hostname)
   prefix = info.path?.replace('/', '') or 'hubot'
   lastQueueSize = 0
+  queueTimeout = 30 * 60 * 1000 # nr of milliseconds after which someone is removed from the queue
 
   if info.auth
     redis.auth info.auth.split(":")[1], (err) ->
@@ -64,12 +65,8 @@ module.exports = (robot) ->
 
 
   robot.respond /hook\s*me\s*up/i, (msg) ->
-    currentTime = new Date().getTime()
-    robot.logger.debug "add to queue: #{msg.message.user.id}"
-    # store user-id in queue with timestamp
-    redis.hset('queue', msg.message.user.id, currentTime, (err, res) ->
-      makeMatch msg
-    )
+    addToQueue(msg.message.user.id, () ->
+      makeMatch(msg))
     msg.reply "Hey #{getUserName(msg.message.user)}, it's nice to hear from you. I'm gonna look for a candidate for you."
 
 
@@ -105,6 +102,9 @@ module.exports = (robot) ->
       setChatHistory(userID1, userID2)
       sendMsg(userID1, "So I took a quick look, I think you and #{userName2} should chat. I've set up a video-room for you at #{videoURL}.")
       sendMsg(userID2, "Hey, it's Sam.ai, I think you and #{userName} should chat. I've set up a video-room for you at #{videoURL}.")
+
+      removeFromQueue(userID1)
+      removeFromQueue(userID2)
 
     else
       #robot.logger.debug "empty id #{userID1}/#{userID2}"
@@ -143,4 +143,19 @@ module.exports = (robot) ->
     robot.logger.debug "set chathistory between #{userID1} and #{userID2}"
     redis.sadd(userID1, userID2)
     redis.sadd(userID2, userID1)
+
+
+  addToQueue = (userID, callback) ->
+    # store user-id in queue with timestamp
+    robot.logger.debug "add to queue: #{userID}"
+    redis.hset('queue', userID, new Date().getTime(), (err, res) -> callback())
+
+
+  removeFromQueue = (userID, callback) ->
+    robot.logger.debug "remove from queue: #{userID}"
+    redis.hdel('queue', userID, (err, res) -> callback())
+
+
+  searchCommunityMember = (forUser) ->
+    return null
 
